@@ -1,0 +1,23 @@
+{
+  "name": "coders-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mat955/QuizApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mat955/QuizApp/issues"
+  },
+  "homepage": "https://github.com/Mat955/QuizApp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
