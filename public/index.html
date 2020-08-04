@@ -11,11 +11,21 @@
   <h1>Coders Game</h1>
   <h2>Poprawne odpowiedzi: <span id="good-answers">0</span></h2>
 
-  <div id="question"></div>
-  <button id="answer1"></button>
-  <button id="answer2"></button>
-  <button id="answer3"></button>
-  <button id="answer4"></button>
+  <div class="game-board">
+
+    <div id="tip"></div>
+
+    <button id="callToAFriend">Telefon</button>
+    <button id="halfOnHalf">50/50</button>
+    <button id="questionToTheCrowd">pytanie do publicznosci</button>
+
+    <div id="question"></div>
+
+    <button class="answer-button" id="answer1" data-answer="0"></button>
+    <button class="answer-button" id="answer2" data-answer="1"></button>
+    <button class="answer-button" id="answer3" data-answer="2"></button>
+    <button class="answer-button" id="answer4" data-answer="3"></button>
+  </div>
 
   <script src="script.js"></script>
 </body>

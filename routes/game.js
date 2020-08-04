@@ -1,6 +1,7 @@
 function gameRoots(app) {
 
   let goodAnswers = 0;
+  let isGameOver = false;
   let callFriendUsed = false;
   let questionCrowdUsed = false;
   let halfUsed = false;
@@ -29,6 +30,12 @@ function gameRoots(app) {
       res.json({
         winner: true
       });
+
+    } else if (isGameOver) {
+      res.json({
+        loser: true,
+      });
+
     } else {
       const nextQuestion = questions[goodAnswers];
       const { question, answers } = nextQuestion;
@@ -38,6 +45,74 @@ function gameRoots(app) {
       })
     }
   });
+
+  app.post('/answer/:index', (req, res) => {
+
+    if (isGameOver) res.json({
+      loser: true,
+    });
+
+    const { index } = req.params;
+
+    const question = questions[goodAnswers];
+
+    const isGoodAnswer = question.correctAnswer === Number(index);
+
+    if (isGoodAnswer) {
+      goodAnswers++;
+    } else {
+      isGameOver = true;
+    };
+
+    res.json({
+      correct: isGoodAnswer,
+      goodAnswers,
+    });
+  });
+
+  app.get('/help/friend', (req, res) => {
+
+    if (callFriendUsed) {
+      return res.json({
+        text: 'To koło ratunkowe było już wykorzystane',
+      });
+    }
+
+    callFriendUsed = true;
+
+    const doesFriendKnowAnswer = Math.random() < 0.5;
+    const question = questions[goodAnswers];
+
+    res.json({
+      text: doesFriendKnowAnswer ? `Hmm, wydaje mi się że odpowiedź to ${question.answers[question.correctAnswer]}` : 'Hmm, no nie wiem....'
+    });
+
+  });
+
+  app.get('/help/half', (req, res) => {
+
+    if (halfUsed) {
+      return res.json({
+        text: 'To koło ratunkowe było już wykorzystane',
+      });
+    }
+
+    halfUsed = true;
+
+    const question = questions[goodAnswers];
+
+    const answersCopy = question.answers.filter((s, index) => (
+      index !== question.correctAnswer
+    ));
+
+    answersCopy.splice(~~(Math.random() * answersCopy.length), 1);
+
+    res.json({
+      answersToRemove: answersCopy,
+    });
+
+  });
+
 }
 
 module.exports = gameRoots;
